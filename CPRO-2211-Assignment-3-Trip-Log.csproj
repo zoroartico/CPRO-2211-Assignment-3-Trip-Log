@@ -7,4 +7,8 @@
     <RootNamespace>CPRO_2211_Assignment_3_Trip_Log</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Trip\Add\" />
+  </ItemGroup>
+
 </Project>

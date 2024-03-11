@@ -1,6 +1,4 @@
-﻿using Microsoft.Build.Framework;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CPRO_2211_Assignment_3_Trip_Log.Models
 {
@@ -9,8 +7,11 @@ namespace CPRO_2211_Assignment_3_Trip_Log.Models
 
         //Basic Trip Object containing key elements of a Trip
         public int TripId { get; set; }
+        [Required]
         public string Destination { get; set; }
+        [Required]
         public DateTime StartDate { get; set; }
+        [Required]
         public DateTime EndDate { get; set; }
         public string? Accommodation { get; set; }
 

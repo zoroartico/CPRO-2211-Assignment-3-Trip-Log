@@ -1,12 +1,20 @@
 ﻿@model Trip
 @{
-    ViewBag.Title = "Add Trip - Page 2";
+    string dest = TempData["Destination"] as string;
+    string accom = TempData["Accommodation"] as string;
+    DateTime start = (DateTime)TempData["StartDate"];
+    DateTime end = (DateTime)TempData["EndDate"];
+    ViewBag.Title = "Add Info for " + dest;
 }
+
 <h2>@ViewBag.Title</h2>
 <form method="post" asp-action="Page2">
-    <div asp-validation-summary="All"
-         class="text-danger">
-    </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <input type="hidden" asp-for="Destination" value="@dest";/>
+    <input type="hidden" asp-for="Accommodation" value="@accom"; />
+    <input type="hidden" asp-for="StartDate" value="@start"; />
+    <input type="hidden" asp-for="EndDate" value="@end"; />
+
     <div class="form-group">
         <label id="phoneInput" asp-for="AccommodationPhone">Phone Number</label>
         <input asp-for="AccommodationPhone" class="form-control">

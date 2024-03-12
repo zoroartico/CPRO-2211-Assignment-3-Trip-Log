@@ -32,9 +32,8 @@ namespace CPRO_2211_Assignment_3_Trip_Log.Controllers
         [HttpPost]
         public IActionResult Page1(Trip trip)
         {
-            // Store individual properties in TempData
+            // Store manditory individual properties in TempData
             TempData["Destination"] = trip.Destination;
-            TempData["Accommodation"] = trip.Accommodation;
             TempData["StartDate"] = trip.StartDate;
             TempData["EndDate"] = trip.EndDate;
 
@@ -42,7 +41,12 @@ namespace CPRO_2211_Assignment_3_Trip_Log.Controllers
             {
                 return View("Add/Page-1", trip);
             }
-
+            if (trip.Accommodation == null)
+            {
+                TempData["Accommodation"] = "None";
+                return RedirectToAction("Page3");
+            }
+            TempData["Accommodation"] = trip.Accommodation;
             return RedirectToAction("Page2");
         }
 
@@ -72,6 +76,8 @@ namespace CPRO_2211_Assignment_3_Trip_Log.Controllers
             TempData["Accommodation"] = trip.Accommodation;
             TempData["StartDate"] = trip.StartDate;
             TempData["EndDate"] = trip.EndDate;
+            TempData["AccommodationPhone"] = trip.AccommodationPhone;
+            TempData["AccommodationEmail"] = trip.AccommodationEmail;
 
             if (!ModelState.IsValid)
             {

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+
 namespace CPRO_2211_Assignment_3_Trip_Log.Models
 {
     public class Trip
@@ -12,12 +13,14 @@ namespace CPRO_2211_Assignment_3_Trip_Log.Models
         public int TripId { get; set; }
         [Required]
         public string Destination { get; set; }
-        [Required]
+        [Required(ErrorMessage ="The Start Date is Required")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MMMM dd, yyyy}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "The End Date is Required")]
         [DataType(DataType.Date)]
+        [StartBeforeEndDate("StartDate",ErrorMessage = "End Date must be after Start Date")]
         [DisplayFormat(DataFormatString = "{0:MMMM dd, yyyy}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
         public string? Accommodation { get; set; }

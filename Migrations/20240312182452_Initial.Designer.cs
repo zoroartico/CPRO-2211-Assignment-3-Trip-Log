@@ -12,7 +12,7 @@ using _2211_Assignment_2_Full_Stack_CRUD.Models;
 namespace CPRO_2211_Assignment_3_Trip_Log.Migrations
 {
     [DbContext(typeof(TripContext))]
-    [Migration("20240312161414_Initial")]
+    [Migration("20240312182452_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

@@ -111,6 +111,7 @@ namespace CPRO_2211_Assignment_3_Trip_Log.Controllers
             {
                 return View("Add/Page-3", trip);
             }
+            TempData["TripAdded"] = "Trip to "+trip.Destination+" Added";
             //save to db as Trip
             context.Trips.Add(trip);
             context.SaveChanges();

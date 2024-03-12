@@ -1,9 +1,10 @@
 ﻿@model List<Trip>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewBag.Title = TempData["TripAdded"];
 }
 <!--Simple home page with loaded list from db-->
 
+<h2>@ViewBag.Title</h2>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>

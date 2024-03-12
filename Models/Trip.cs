@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CPRO_2211_Assignment_3_Trip_Log.Models
 {
@@ -6,6 +7,8 @@ namespace CPRO_2211_Assignment_3_Trip_Log.Models
     {
 
         //Basic Trip Object containing key elements of a Trip
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TripId { get; set; }
         [Required]
         public string Destination { get; set; }

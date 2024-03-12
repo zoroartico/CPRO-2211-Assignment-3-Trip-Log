@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using _2211_Assignment_2_Full_Stack_CRUD.Models;
 using CPRO_2211_Assignment_3_Trip_Log.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace CPRO_2211_Assignment_3_Trip_Log.Controllers
 {
@@ -31,46 +32,70 @@ namespace CPRO_2211_Assignment_3_Trip_Log.Controllers
         [HttpPost]
         public IActionResult Page1(Trip trip)
         {
-            if (!ModelState.IsValid)
-            {
-                return View("Add/Page-1", trip);
-            }
-            //Store data from Page 1 in TempData
+            // Store individual properties in TempData
             TempData["Destination"] = trip.Destination;
             TempData["Accommodation"] = trip.Accommodation;
             TempData["StartDate"] = trip.StartDate;
             TempData["EndDate"] = trip.EndDate;
+
+            if (!ModelState.IsValid)
+            {
+                return View("Add/Page-1", trip);
+            }
+
             return RedirectToAction("Page2");
         }
+
 
         [HttpGet]
         public IActionResult Page2()
         {
-            //Retrieve data from TempData if available
-            var page1Data = TempData["Page1Data"] as Trip;
-            return View("Add/Page-2",page1Data);
+            // Create a new Trip object with retrieved properties
+            var trip = new Trip
+            {
+                Destination = TempData["Destination"] as string,
+                Accommodation = TempData["Accommodation"] as string,
+                StartDate = (DateTime)TempData["StartDate"],
+                EndDate = (DateTime)TempData["EndDate"]
+            };
+
+            return View("Add/Page-2", trip);
         }
+
 
         [HttpPost]
         public IActionResult Page2(Trip trip)
         {
+
+            // Store individual properties in TempData
+            TempData["Destination"] = trip.Destination;
+            TempData["Accommodation"] = trip.Accommodation;
+            TempData["StartDate"] = trip.StartDate;
+            TempData["EndDate"] = trip.EndDate;
+
             if (!ModelState.IsValid)
             {
-                return View("Add/Page-2",trip);
+                return View("Add/Page-2", trip);
             }
-            //Store data from Page 2 in TempData
-            TempData["AccommodationPhone"] = trip.AccommodationPhone;
-            TempData["AccommodationEmail"] = trip.AccommodationEmail;
-            return RedirectToAction("Page3");
+
+            return RedirectToAction("Page3",trip);
         }
 
         [HttpGet]
         public IActionResult Page3()
         {
-            //Retrieve data from TempData if available
-            var page1Data = TempData["Page1Data"] as Trip;
-            var page2Data = TempData["Page2Data"] as Trip;
-            return View("Add/Page-3",(page1Data, page2Data));
+            // Create a new Trip object with retrieved properties
+            var trip = new Trip
+            {
+                Destination = TempData["Destination"] as string,
+                Accommodation = TempData["Accommodation"] as string,
+                StartDate = (DateTime)TempData["StartDate"],
+                EndDate = (DateTime)TempData["EndDate"],
+                AccommodationPhone = TempData["AccommodationPhone"] as string,
+                AccommodationEmail = TempData["AccommodationEmail"] as string
+            };
+
+            return View("Add/Page-3",trip);
         }
 
         [HttpPost]
@@ -78,23 +103,13 @@ namespace CPRO_2211_Assignment_3_Trip_Log.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Add/Page-3",trip);
+                return View("Add/Page-3", trip);
             }
-            //Store data from Page 3 in TempData
-            TempData["Page3Data"] = trip;
-            //form submission or final processing
-            return RedirectToAction("Confirmation");
+            //save to db as Trip
+            context.Trips.Add(trip);
+            context.SaveChanges();
+            return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public IActionResult Confirmation()
-        {
-            //Retrieve data from TempData if needed for confirmation page
-            var page1Data = TempData["Page1Data"] as Trip;
-            var page2Data = TempData["Page2Data"] as Trip;
-            var page3Data = TempData["Page3Data"] as Trip;
-            //Display confirmation page with collected data
-            return View((page1Data, page2Data, page3Data));
-        }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace CPRO_2211_Assignment_3_Trip_Log.Models
 {
-    public class TripModel
+    public class Trip
     {
 
         //Basic Trip Object containing key elements of a Trip

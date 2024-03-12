@@ -1,0 +1,56 @@
+﻿@model List<Trip>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<!--Simple home page with loaded list from db-->
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Destination</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Accommodations</th>
+            <th>Things To Do</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!--Loads each TripList item into a row-->
+
+        @foreach (var trip in Model)
+        {
+            if (trip != null)
+            {
+                <tr>
+                    <td>@trip.Destination</td>
+                    <td>@trip.StartDate.ToString("MMMM dd, yyyy")</td>
+                    <td>@trip.EndDate.ToString("MMMM dd, yyyy")</td>
+                    
+                    @if (!string.IsNullOrEmpty(trip.Accommodation))
+                    {
+                        <td>
+                            @{
+                                var phoneSeparator = !string.IsNullOrEmpty(trip.AccommodationPhone) ? "<br /> Phone: " : "";
+
+                                var emailSeparator = !string.IsNullOrEmpty(trip.AccommodationPhone) && 
+                                                     !string.IsNullOrEmpty(trip.AccommodationEmail) ? " | Email: " :
+                                                        (!string.IsNullOrEmpty(trip.AccommodationEmail) ? "<br /> Email: " : "");
+                            }
+                            @Html.Raw($"{trip.Accommodation}{phoneSeparator}{trip.AccommodationPhone ?? ""}{emailSeparator}{trip.AccommodationEmail ?? ""}")
+                        </td>
+                    }
+                
+                    <td>
+                        @{
+                            var separator1 = trip.ThingToDo2 != null ? (trip.ThingToDo1 !=null ? "<br />": "") : "";
+                            var separator2 = trip.ThingToDo3 != null ? "<br />" : "";
+                        }
+                        @Html.Raw($"{trip.ThingToDo1 ?? ""}{separator1}{trip.ThingToDo2 ?? ""}{separator2}{trip.ThingToDo3 ?? ""}")
+                    </td>
+
+                </tr>
+            }
+        }
+    </tbody>
+    <a asp-controller="Trip" asp-action="Add" asp-slug="Page-1" class="btn btn-outline-success">Add New Trip</a>
+</table>

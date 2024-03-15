@@ -41,6 +41,7 @@ namespace CPRO_2211_Assignment_3_Trip_Log.Controllers
             {
                 return View("Add/Page-1", trip);
             }
+            //skips accommodation information page if null field
             if (trip.Accommodation == null)
             {
                 TempData["Accommodation"] = "None";

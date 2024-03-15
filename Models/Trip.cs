@@ -6,18 +6,23 @@ namespace CPRO_2211_Assignment_3_Trip_Log.Models
 {
     public class Trip
     {
-
         //Basic Trip Object containing key elements of a Trip
+
+        //DB generates key
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TripId { get; set; }
+
         [Required]
         public string Destination { get; set; }
+
+        //Formatted Date
         [Required(ErrorMessage ="The Start Date is Required")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MMMM dd, yyyy}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
 
+        //Formatted and utilizes custom annotation 'StartBeforeEndDate'
         [Required(ErrorMessage = "The End Date is Required")]
         [DataType(DataType.Date)]
         [StartBeforeEndDate("StartDate",ErrorMessage = "End Date must be after Start Date")]
